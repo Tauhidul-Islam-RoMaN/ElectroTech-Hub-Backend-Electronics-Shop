@@ -97,13 +97,16 @@ async function run() {
       const result = await cursor.toArray()
       res.send(result)
     })
+    
 
     // update product operation
     app.put("/products/:id", async (req, res) => {
       const id = req.params.id;
       const data = req.body;
-      console.log("id", id, data);
-      const filter = { _id: new ObjectId(id) };
+      console.log(id, data);
+      const filter = { 
+        _id: new ObjectId(id) 
+      };
       const options = { upsert: true };
       const updatedProduct = {
         $set: {
@@ -130,7 +133,7 @@ app.delete("/cart/:id", async (req, res) => {
   const id = req.params.id;
   console.log( id);
   const query = {
-    _id: (id),
+    _id: new ObjectId(id),
   };
   const result = await productCart.deleteOne(query);
   console.log(result);
