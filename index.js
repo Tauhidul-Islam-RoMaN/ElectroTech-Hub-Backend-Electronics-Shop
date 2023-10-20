@@ -1,10 +1,10 @@
-const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const ObjectId = require('mongodb').ObjectId;
-const cors = require('cors');
-const app = express()
-const port = process.env.PORT || 5000
 require("dotenv").config()
+const express = require('express');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const port = process.env.PORT || 5000
+
+const app = express()
+const cors = require('cors');
 
 // Middleware
 app.use(cors());
@@ -32,7 +32,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    await client.connect();
+    // await client.connect();
 
     const productCollection = client.db("productDB").collection("product")
     const productBrand = client.db("productBrandDB").collection("brand")
