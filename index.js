@@ -53,6 +53,36 @@ async function run() {
       const result = await cursor.toArray()
       res.send(result)
     })
+
+     // Get the data from client server
+     app.post('/products', async (req, res) => {
+      const newProduct = req.body
+      console.log(newProduct);
+      const result = await productCollection.insertOne(newProduct)
+      console.log(result);
+      res.send(result)
+    })
+
+    // send data to client
+    app.get('/products', async (req, res) => {
+      const cursor = productCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
+    // send data to client for product single id
+    app.get("/products/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = {
+        _id: new ObjectId(id),
+      };
+      const result = await productCollection.findOne(query);
+      console.log(result);
+      res.send(result);
+    });
+
+
+
     
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
