@@ -82,6 +82,22 @@ async function run() {
     });
 
 
+    // Get the data from client server of cart product
+    app.post('/cart', async (req, res) => {
+      const newCart = req.body
+      console.log(newCart);
+      const result = await productCart.insertOne(newCart)
+      console.log(result);
+      res.send(result)
+    })
+
+    // send data to client of cart product 
+    app.get('/cart', async (req, res) => {
+      const cursor = productCart.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
 
     
     // Send a ping to confirm a successful connection
