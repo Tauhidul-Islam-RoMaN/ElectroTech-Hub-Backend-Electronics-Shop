@@ -34,6 +34,25 @@ async function run() {
   try {
     await client.connect();
 
+    const productCollection = client.db("productDB").collection("product")
+    const productBrand = client.db("productBrandDB").collection("brand")
+    const productCart = client.db("productCart").collection("cart")
+
+    // Get the data from client server of brand name
+    app.post('/brands', async (req, res) => {
+      const newBrand = req.body
+      console.log(newBrand);
+      const result = await productBrand.insertOne(newBrand)
+      console.log(result);
+      res.send(result)
+    })
+
+    // send data to client of brand name
+    app.get('/brands', async (req, res) => {
+      const cursor = productBrand.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
     
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
